@@ -1,5 +1,5 @@
 import express from "express";
-import { getGPTResponse } from "../chatbot";
+import { getGPTResponse } from "../chatbot.js";
 
 const router = express.Router();
 

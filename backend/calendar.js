@@ -1,5 +1,5 @@
-import UserEvent from "../models/userEvent.js";
-import Notification from "../models/notification.js";
+import UserEvent from "./models/userEvent.js";
+import Notification from "./models/notification.js";
 import openai from "openai";
 
 // Fetch User Period Checking

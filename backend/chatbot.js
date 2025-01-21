@@ -37,7 +37,7 @@ function generatePrompt(userInput, type, userLanguage = "vi") {
 }
 
 // Function to call OpenAI API
-async function getGPTResponse(userInput, promptType, userLanguage = "vi") {
+export async function getGPTResponse(userInput, promptType, userLanguage = "vi") {
   try {
     // Generate the dynamic prompt
     const prompt = generatePrompt(userInput, promptType, userLanguage);
