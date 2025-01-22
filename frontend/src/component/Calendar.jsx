@@ -12,6 +12,15 @@ const Calendar = () => {
     const [days, setDays] = useState([]);
     const [selectedDay, setSelectedDay] = useState(null);
     const [popup, setPopup] = useState({ show: false, message: "", position: {} });
+    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+        eventType: "UserGeneralEvent",
+        startDate: "",
+        endDate: "",
+        notes: "",
+    });
+    const [events, setEvents] = useState([]); // Placeholder for events
+
 
     useEffect(() => {
         renderCalendar();
@@ -79,6 +88,29 @@ const Calendar = () => {
         setTimeout(() => setPopup({ show: false, message: "", position: {} }), 3000);
     };
 
+    const addEvent = () => {
+        if (!formData.startDate) {
+            alert("Please select a start date.");
+            return;
+        }
+
+        const newEvent = {
+            eventType: formData.eventType,
+            startDate: formData.startDate,
+            endDate: formData.endDate || formData.startDate,
+            notes: formData.notes,
+        };
+
+        setEvents([...events, newEvent]);
+        setFormData({
+            eventType: "UserGeneralEvent",
+            startDate: "",
+            endDate: "",
+            notes: "",
+        });
+        setShowForm(false);
+    };
+
     return (
         <div className="calendar-container">
             <div className="calendar-header">
@@ -114,6 +146,47 @@ const Calendar = () => {
                     }}
                 >
                     {popup.message}
+                </div>
+            )}
+            <button className="add-event-btn" onClick={() => setShowForm(true)}>+</button>
+
+            {showForm && (
+                <div className="event-form">
+                    <h2>Add Event</h2>
+                    <select
+                        value={formData.eventType}
+                        onChange={(e) => setFormData({ ...formData, eventType: e.target.value })}
+                    >
+                        <option value="UserBooking">Booking</option>
+                        <option value="UserPeriod">Period</option>
+                        <option value="UserGeneralEvent">General Event</option>
+                    </select>
+                    <div>
+                    <label htmlFor="startDate">Start Date</label>
+                    <input
+                        id="startDate"
+                        type="date"
+                        value={formData.startDate}
+                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                        required
+                    />
+                    </div>
+                    <div>
+                    <label htmlFor="endDate">End Date</label>
+                    <input
+                        id="endDate"
+                        type="date"
+                        value={formData.endDate}
+                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                    />
+                    </div>
+                    <textarea
+                        placeholder="Notes"
+                        value={formData.notes}
+                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                    ></textarea>
+                    <button onClick={addEvent}>Add Event</button>
+                    <button onClick={() => setShowForm(false)}>Cancel</button>
                 </div>
             )}
         </div>
