@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    gap: 16px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 900px;
+    margin-top: 40px;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #D6459B;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #D6459B;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 20px;
+    font-weight: bold;
+    color: #999;
+    text-align: center;
+    width: 100%;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.day {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+.highlight {
+    background: #F5A3C7;
+    color: white;
+    font-weight: bold;
+}
+
+.today {
+    background: #D6459B;
+    color: white;
+    font-weight: bold;
+}
+
+.selected {
+    border: 2px solid #0099CC;
+    box-shadow: 0 0 8px rgba(0, 153, 204, 0.5);
+}
+.selected-day-info {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+}
+
+.popup {
+    position: absolute;
+    background: #ffd3e3;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #0099cc;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    white-space: nowrap;
+}

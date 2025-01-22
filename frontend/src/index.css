@@ -5,14 +5,24 @@
   font-family: sans-serif;
 }
 
-/* .container{
-  width: 100vw;
-  min-height: 100vh;
+#root {
+  width: 100%;
+  height: 100%;
   background-color: #FFF4EA;
-} */
+}
 
 .content {
+  display: flex;
   padding-top: 168px;
+  width: 100%;
   background-color: #FFF4EA;
+}
+
+.calendar-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
