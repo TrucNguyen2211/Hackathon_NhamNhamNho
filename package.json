@@ -15,6 +15,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "franc": "^6.2.0",
     "mongoose": "^8.9.5",
     "mongose": "^0.0.2-security",
     "nodemon": "^3.1.9",
