@@ -1,15 +1,34 @@
 import mongoose from "mongoose";
 
-const userEventSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  eventType: {
-    type: String,
-    enum: ["UserMentorBooking", "UserPeriodData", "UserEvent"],
+const UserEventSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
-  startDate: { type: Date, required: true },
-  endDate: { type: Date },
-  notes: { type: String },
-}, { timestamps: true });
+  eventType: {
+    type: String,
+    enum: ["UserBooking", "UserPeriod", "UserGeneralEvent"], // Updated event types
+    required: true,
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    validate: {
+      validator: function (value) {
+        return value >= this.startDate;
+      },
+      message: "End date must be after start date."
+    },
+  },
+  notes: {
+    type: String,
+    default: "",
+  },
+});
 
-export default mongoose.model("UserEvent", userEventSchema);
+const UserEvent = mongoose.model("UserEvent", UserEventSchema);
+export default UserEvent;
