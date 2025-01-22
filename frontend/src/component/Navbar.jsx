@@ -19,13 +19,13 @@ export const Navbar = () => {
                         <Link to="/">About</Link>
                     </li>
                     <li>
-                        <Link to="/">Chat</Link>
+                        <Link to="/chat">Chat</Link>
                     </li>
                     <li>
-                        <Link to="/">Schedule</Link>
+                        <Link to="/schedule">Schedule</Link>
                     </li>
                     <li>
-                        <Link to="/">Calendar</Link>
+                        <Link to="/home#calendar-box">Calendar</Link>
                     </li>
                 </ul>
                 <ul>
