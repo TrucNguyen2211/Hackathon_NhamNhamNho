@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import calendarRoutes from "./routes/calendarRouter.js";
 import chatbotRoutes from "./routes/chatbotRouter.js";
 import connectDB from "./utils/dbConnection.js";
+import cors from "cors";  // Import cors
 
 dotenv.config();
 
@@ -22,6 +23,12 @@ app.use("/api/chatbot", chatbotRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the API");
 });
+
+app.use(cors({
+  origin: true,
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization", "skip"],
+}));
 
 // Start server
 const PORT = process.env.PORT || 3000;

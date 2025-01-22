@@ -3,12 +3,51 @@ import './ChatInterface.css';
 
 const ChatInterface = () => {
     const [message, setMessage] = useState('');
+    const [chatMessages, setChatMessages] = useState([
+        { sender: 'bot', content: 'Hi! How can I help you today?' }
+    ]);
+
+    // Function to call chatbot API
+    async function getChatbotResponse(userInput) {
+        try {
+            const response = await fetch("/api/chatbot/ask", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userInput }),
+            });
     
-    const handleSendMessage = () => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            return data.success ? data.response : "Chatbot failed to respond.";
+        } catch (error) {
+            console.error("Error:", error);
+            return "Error connecting to chatbot.";
+        }
+    }
+    
+
+    // Handle sending a message
+    const handleSendMessage = async () => {
         if (message.trim()) {
-            // Send message logic here (e.g., update state, send to server)
-            console.log('Message sent:', message);
+            // Add user message to chat
+            const newUserMessage = { sender: 'user', content: message };
+            setChatMessages([...chatMessages, newUserMessage]);
+
+            // Clear input field
             setMessage('');
+
+            // Get chatbot response
+            const botResponse = await getChatbotResponse(message);
+            const newBotMessage = { sender: 'bot', content: botResponse };
+
+            // Update chat with bot response
+            setChatMessages([...chatMessages, newUserMessage, newBotMessage]);
         }
     };
 
@@ -32,14 +71,12 @@ const ChatInterface = () => {
                 <div className="chat-area">
                     <div className="chat-header">DR. NAME</div>
                     <div className="chat-messages">
-                        <div className="message sent">
-                            <img src="https://via.placeholder.com/50" alt="avatar" />
-                            <div className="message-content">Hey, I need your help</div>
-                        </div>
-                        <div className="message received">
-                            <img src="https://via.placeholder.com/50" alt="avatar" />
-                            <div className="message-content">Sure, how can i help you?</div>
-                        </div>
+                        {chatMessages.map((msg, index) => (
+                            <div key={index} className={`message ${msg.sender === 'user' ? 'sent' : 'received'}`}>
+                                <img src="https://via.placeholder.com/50" alt="avatar" />
+                                <div className="message-content">{msg.content}</div>
+                            </div>
+                        ))}
                     </div>
                     <div className="input-area">
                         <input 
