@@ -1,0 +1,88 @@
+
+/* Outer navbar styles */
+.navbar-outer {
+    
+}
+
+/* General styles for the navbar */
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 73px;
+    gap: 20px;
+    /* transform: translateX(-50%); Center the navbar */
+
+    position: fixed; /* This makes the navbar stay in place */
+    top: 43px; /* Stick to the top of the viewport */
+    left: 0; /* Align with the left edge */
+    width: 100%; /* Stretch the navbar to the full width */
+    z-index: 100; /* Ensure it stays above other elements */
+    height: 80px; /* Keep the original height */
+    background: #2A3335; /* Match the original background */
+    box-shadow: 0px 7px 0px #27124A; /* Maintain shadow effect */
+    border-radius: 40px; /* Remove the border radius for a seamless top bar */
+}
+
+/* Logo styling */
+.navbar img {
+    height: 50px; /* Scales logo appropriately */
+    cursor: pointer;
+}
+
+/* Main navigation links */
+.navbar ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* Space between nav items */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Individual list items */
+.navbar ul li {
+    text-decoration: none;
+    color: #F5F5F5;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.navbar ul li a {
+    color: inherit; /* Inherit the color for links */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Smooth hover transition */
+}
+
+.navbar ul li a:hover {
+    color: #FFD700; /* Highlight color on hover */
+}
+
+/* Auth navigation links (Login and Sign Up) */
+.navbar ul:last-child {
+    /* gap: 15px; Slightly tighter spacing for auth links */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 20px;
+        gap: 10px;
+        height: auto; /* Adjust height for stacking items */
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Space between stacked items */
+    }
+
+    .navbar img {
+        margin-bottom: 10px; /* Add spacing below logo */
+    }
+}
