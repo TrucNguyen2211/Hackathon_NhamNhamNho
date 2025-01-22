@@ -36,8 +36,15 @@ function generatePrompt(userInput, type, userLanguage = "vi") {
   return `${languageInstruction}\n\n${prompts[type]}`;
 }
 
+// Sensitive topic
+const sensitiveTopics = ["pregnancy", "sexual illness", "infection"];
+
+function checkSensitiveTopic(userInput) {
+  return sensitiveTopics.some((topic) => userInput.toLowerCase().includes(topic));
+}
+
 // Function to call OpenAI API
-async function getGPTResponse(userInput, promptType, userLanguage = "vi") {
+export async function getGPTResponse(userInput, promptType, userLanguage = "vi") {
   try {
     // Generate the dynamic prompt
     const prompt = generatePrompt(userInput, promptType, userLanguage);
@@ -58,7 +65,12 @@ async function getGPTResponse(userInput, promptType, userLanguage = "vi") {
     });
 
     // Extract the AI response
-    const aiResponse = response.choices[0].message.content.trim();
+    let aiResponse = response.choices[0].message.content.trim();
+
+     // Append disclaimer for sensitive topics
+     if (checkSensitiveTopic(userInput)) {
+      aiResponse += "\n\n**I highly recommend visiting a medical facility near your location for further check-up.**";
+    }
 
     // Add the AI's response to the context
     context.push({ role: "assistant", content: aiResponse });
@@ -73,9 +85,9 @@ async function getGPTResponse(userInput, promptType, userLanguage = "vi") {
 // Example Usage
 (async () => {
   let context = ""; // Initialize an empty context for reinforcement
-  const userInput = "What are the signs of ovulation?";
-  const promptType = 3; // Change between 1, 2, or 3 to test dynamic prompts
+  const userInput = "What should I do if I suspect I have an STI?";
+  const promptType = 2; // Example: Culturally relevant advice
   const { aiResponse, context: updatedContext } = await getGPTResponse(userInput, promptType, context);
-  context = updatedContext; // Update context for subsequent calls
+  context = updatedContext; 
   console.log("AI Response:", aiResponse);
 })();
