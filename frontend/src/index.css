@@ -26,3 +26,8 @@
   width: 100%;
 }
 
+#calendar-box {
+  scroll-margin-top: 160px; /* Adjust this value based on your navbar height */
+}
+
+
