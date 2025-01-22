@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ChatInterface.css';
 
 const ChatInterface = () => {
     const [message, setMessage] = useState('');
-    
+    const [messages, setMessages] = useState([
+        { id: 1, type: 'sent', content: 'Hey, I need your help' },
+        { id: 2, type: 'received', content: 'Sure, how can I help you?' },
+    ]);
+
+    // Simulate fetching a new message from an API
+    useEffect(() => {
+        const interval = setInterval(() => { //change this to the actuall API call
+            // Simulated API response
+            const apiMessage = {
+                id: Date.now(),
+                type: 'received',
+                content: 'This is a message from the server.',
+            };
+            setMessages((prevMessages) => [...prevMessages, apiMessage]);
+        }, 5000); // Fetch a new message every 5 seconds
+
+        return () => clearInterval(interval); // Cleanup interval on component unmount
+    }, []);
+
     const handleSendMessage = () => {
         if (message.trim()) {
-            // Send message logic here (e.g., update state, send to server)
-            console.log('Message sent:', message);
+            const newMessage = {
+                id: Date.now(),
+                type: 'sent',
+                content: message,
+            };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
             setMessage('');
         }
     };
@@ -32,30 +55,30 @@ const ChatInterface = () => {
                 <div className="chat-area">
                     <div className="chat-header">DR. NAME</div>
                     <div className="chat-messages">
-                        <div className="message sent">
-                            <img src="https://via.placeholder.com/50" alt="avatar" />
-                            <div className="message-content">Hey, I need your help</div>
-                        </div>
-                        <div className="message received">
-                            <img src="https://via.placeholder.com/50" alt="avatar" />
-                            <div className="message-content">Sure, how can i help you?</div>
-                        </div>
+                        {messages.map((msg) => (
+                            <div
+                                key={msg.id}
+                                className={`message ${msg.type}`}
+                            >
+                                <img
+                                    src="https://via.placeholder.com/50"
+                                    alt="avatar"
+                                />
+                                <div className="message-content">
+                                    {msg.content}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                     <div className="input-area">
-                        <input 
-                            type="text" 
-                            placeholder="Write a message..." 
-                            value={message} 
-                            onChange={(e) => setMessage(e.target.value)} 
+                        <input
+                            type="text"
+                            placeholder="Write a message..."
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                         />
                         <button onClick={handleSendMessage}>Send</button>
                     </div>
-                </div>
-
-                <div className="profile">
-                    <img src="https://via.placeholder.com/100" alt="profile" />
-                    <h2>DR. NAME</h2>
-                    <p>Information here</p>
                 </div>
             </div>
         </div>

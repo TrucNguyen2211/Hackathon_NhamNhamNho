@@ -6,8 +6,6 @@ import Calendar from "./component/Calendar";
 function Home() {
     return (
         <div id ="root">
-         
-
             <div className="content">
                 <h1>Home</h1>
                 <p>Welcome to the Home page!</p>

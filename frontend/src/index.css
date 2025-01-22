@@ -8,14 +8,12 @@
 #root {
   width: 100%;
   height: 100%;
-  background-color: #FFF4EA;
+  padding-top: 4%;
 }
 
 .content {
   display: flex;
-  padding-top: 168px;
   width: 100%;
-  background-color: #FFF4EA;
 }
 
 .calendar-box {
