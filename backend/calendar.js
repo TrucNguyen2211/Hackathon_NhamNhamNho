@@ -112,7 +112,7 @@ export const recalculatePeriod = async (userId) => {
     const prompt = `Based on the following menstrual data, predict the next period cycle:\n${JSON.stringify(structuredData)}`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: "You are an assistant specializing in menstrual cycle predictions." },
         { role: "user", content: prompt },
@@ -138,7 +138,7 @@ export const calculatePeriod = async (req, res) => {
   try {
     const prompt = `Predict next menstrual cycle based on user input: ${JSON.stringify(data)}`;
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: "You are an assistant specializing in menstrual cycle predictions." },
         { role: "user", content: prompt },
