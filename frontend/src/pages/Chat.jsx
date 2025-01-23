@@ -68,7 +68,14 @@ const ChatInterface = () => {
                     <div className="contact active">
                         <img src="https://via.placeholder.com/50" alt="avatar" />
                         <div>
-                            <strong>DR. NAME</strong>
+                            <strong>Your AI Companion</strong>
+                            <p>messages content</p>
+                        </div>
+                    </div>
+                    <div className="contact active">
+                        <img src="https://via.placeholder.com/50" alt="avatar" />
+                        <div>
+                            <strong>Khanh</strong>
                             <p>messages content</p>
                         </div>
                     </div>
