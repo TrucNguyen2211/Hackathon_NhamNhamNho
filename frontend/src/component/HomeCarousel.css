@@ -1,0 +1,59 @@
+.carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 10px;
+    gap: 40px 40px;
+  
+    background: #ffcfee;
+    border-radius: 20px; 
+    text-align: center; /* Center the text */
+    color: #000; /* Default text color */
+
+    max-width: 1100px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  #carousel {
+    margin-bottom: 120px; /* Add some space at the bottom */
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .carousel h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  .carousel h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0;
+    color: #D6459B; /* Bright pink for the headline */
+  }
+  
+  .carousel p {
+    font-size: 20px;
+    color: #D6459B; /* Muted pinkish color */
+    margin: 0;
+  }
+  
+  .track-button {
+    width: 300px;
+    height: 60px;
+    background: #D6459B;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .track-button:hover {
+    background: #d60068; /* Darker pink on hover */
+  }
+  
