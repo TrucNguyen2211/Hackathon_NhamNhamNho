@@ -67,9 +67,12 @@ function determinePromptType(userInput, userLanguage) {
 // Function to generate dynamic prompts
 function generatePrompt(userInput, type, userLanguage) {
   const prompts = {
-    1: `You are a close friend providing casual, supportive responses:\n\nUser: ${userInput}\nAssistant:`,
-    2: `You are a close friend giving empathetic personal advice:\n\nUser: ${userInput}\nAssistant:`,
-    3: `You are a reproductive health assistant with a warm and friendly tone.  
+    1: `You are a close friend providing casual, supportive responses. 
+    Limit your response to one to three sentences and avoid being overly detailed:\n\nUser: ${userInput}\nAssistant:`,
+    2: `You are a close friend giving empathetic personal advice. 
+    Keep your response short and focus on the most important points, within two to four sentences:\n\nUser: ${userInput}\nAssistant:`,
+    3: `You are a reproductive health assistant with a warm and friendly tone. Be concise and professional when discussing sensitive health topics.
+    Provide only essential information in two to four sentences. 
     Use the following key facts to guide your response:\n\n
          - Average menstrual cycle length is 28 days (range: 21-35 days).\n
          - Ovulation occurs about 14 days before the next period.\n
@@ -83,12 +86,17 @@ function generatePrompt(userInput, type, userLanguage) {
 }
 
 // Sensitive topic
-const sensitiveTopics = ["pregnancy", "sexual illness", "infection"];
-const sensitiveTopicsVi = ["mang thai", "bệnh tình dục", "nhiễm trùng"];
+const sensitiveTopics = ["pregnancy", "pregnant", "giving birth", "sexual illness", "infection"];
+const sensitiveTopicsVi = ["mang thai", "mang bầu", "sinh con", "bệnh tình dục", "nhiễm trùng"];
 
 function checkSensitiveTopic(userInput, userLanguage) {
   const topics = userLanguage === "vi" ? sensitiveTopicsVi : sensitiveTopics;
-  return topics.some((topic) => userInput.toLowerCase().includes(topic));
+  
+  // Create regex patterns for each topic
+  const regexPatterns = topics.map((topic) => new RegExp(`\\b${topic}\\b`, "i"));
+  
+  // Check if any pattern matches the input
+  return regexPatterns.some((regex) => regex.test(userInput));
 }
 
 // Function to call OpenAI API
@@ -111,10 +119,12 @@ export async function getGPTResponse(userInput) {
       context.shift(); // Remove the oldest message
     }
 
+    const maxTokens = checkSensitiveTopic(userInput, userLanguage) ? 100 : 300;
+
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: context,
-      max_tokens: 300,
+      max_tokens: maxTokens,
       temperature: 0.7,
     });
 
@@ -128,6 +138,9 @@ export async function getGPTResponse(userInput) {
         : "\n\n**I highly recommend visiting a medical facility near your location for further check-up.**";
     }
 
+    // Truncate response to ensure brevity
+    aiResponse = aiResponse.slice(0, 500);
+
     // Add the AI's response to the context
     context.push({ role: "assistant", content: aiResponse });
 
@@ -138,106 +151,5 @@ export async function getGPTResponse(userInput) {
   }
 }
 
-// Example invocation
-async function main() {
-  const userInput = "Các biện pháp tránh thai nào phổ biến ở Việt Nam?";
-  
-  try {
-    const { aiResponse, context } = await getGPTResponse(userInput);
-    console.log("Chatbot Response:", aiResponse);
-  } catch (error) {
-    console.error("Error:", error.message);
-  }
-}
 
-main();
 
-/*
-This code snippet demonstrates how to create a chatbot using the OpenAI API to provide reproductive health advice. 
-The chatbot can respond to user queries in multiple languages and handle sensitive topics appropriately.
-
-1. Backend API
-
-    Endpoint: http://localhost:3000/chat
-    Method: POST
-    Request Body: Send a JSON object with the user's message:
-
-{ "userInput": "Your question here" }
-
-Response: The chatbot replies with:
-
-    { "message": "Chatbot's response here" }
-
-2. Frontend Steps
-Example HTML:
-
-Add a simple chat interface:
-
-<div id="chat-container">
-  <input id="user-input" type="text" placeholder="Type your question..." />
-  <button id="send-btn">Send</button>
-  <div id="chat-log"></div>
-</div>
-
-Example JavaScript:
-
-Handle user input and fetch chatbot responses:
-
-document.getElementById("send-btn").addEventListener("click", async () => {
-  const userInput = document.getElementById("user-input").value;
-  if (!userInput) return;
-
-  // Display user's message
-  const chatLog = document.getElementById("chat-log");
-  chatLog.innerHTML += `<div class="bubble user">${userInput}</div>`;
-
-  // Fetch chatbot response
-  try {
-    const response = await fetch("http://localhost:3000/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userInput }),
-    });
-    const data = await response.json();
-
-    // Display chatbot's message
-    chatLog.innerHTML += `<div class="bubble bot">${data.message}</div>`;
-  } catch (error) {
-    console.error("Error:", error);
-    chatLog.innerHTML += `<div class="bubble bot">Oops! Something went wrong.</div>`;
-  }
-
-  // Clear input field
-  document.getElementById("user-input").value = "";
-});
-
-Example CSS (Optional):
-
-Style the chat bubbles:
-
-.bubble {
-  margin: 5px;
-  padding: 10px;
-  border-radius: 10px;
-  max-width: 70%;
-}
-.user {
-  background-color: #d1f7c4;
-  text-align: right;
-  margin-left: auto;
-}
-.bot {
-  background-color: #f0f0f0;
-  text-align: left;
-  margin-right: auto;
-}
-
-3. Testing
-
-    Start the backend:
-
-node index.js
-
-Open the HTML file in a browser.
-Type a question and click Send. The chatbot will reply in the chat log.
-*/
