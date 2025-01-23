@@ -1,30 +1,37 @@
+/* General Styling for Chat Interface */
+.chat-interface {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* Subtract the height of the navbar (adjust 60px as needed) */
+    box-sizing: border-box;
+}
+
 /* General Styling */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     background: #F2E7DD;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
-    padding-top: 15%;
 }
 
 /* Continuous Blue Border Line */
 .container {
     display: flex;
-    flex: 1;
     border-left: 3px solid #0A97B0;
     border-right: 3px solid #0A97B0;
+    border-top: 3px solid #0A97B0;
+    border-bottom: 3px solid #0A97B0;
 }
 
 /* Contacts Section */
 .contacts {
     width: 22%;
-    background: #F2E7DD;
+    /* background: #F2E7DD; */
     padding: 20px;
     border-right: 3px solid #0A97B0;
+    
 }
 
 /* Search Bar */
@@ -32,7 +39,7 @@ body {
     box-sizing: border-box;
     width: 90%;
     height: 50px;
-    background: #FFF4EA;
+    background: #F2E7DD;
     border: 3px solid #0A97B0;
     border-radius: 26.5px;
     display: flex;
@@ -91,6 +98,8 @@ body {
     padding: 20px;
     position: relative;
     border-right: 3px solid #0A97B0;
+    height: 100vh; /*full height*/
+    box-sizing: border-box;
 }
 
 .chat-header {
