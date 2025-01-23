@@ -4,6 +4,7 @@
     flex-direction: column;
     height: calc(100vh - 60px); /* Subtract the height of the navbar (adjust 60px as needed) */
     box-sizing: border-box;
+    padding-top: 50px; /* Add some space at the top */
 }
 
 /* General Styling */
