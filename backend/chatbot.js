@@ -151,17 +151,5 @@ export async function getGPTResponse(userInput) {
   }
 }
 
-// Example invocation
-async function main() {
-  const userInput = "Pregnant?";
-  
-  try {
-    const { aiResponse, context } = await getGPTResponse(userInput);
-    console.log("Chatbot Response:", aiResponse);
-  } catch (error) {
-    console.error("Error:", error.message);
-  }
-}
 
-main();
 
